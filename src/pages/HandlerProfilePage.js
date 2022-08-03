@@ -1,5 +1,6 @@
 import React from "react"
 import axios from "axios";
+import { Link } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/auth.context";
 
@@ -9,46 +10,87 @@ const API_URL = "http://localhost:5005";
 
 function HandlerProfilePage() {
 
-    const { user } = useContext(AuthContext)
-    const [ handler, setHandler ] = useState("");
+    const { user, storedToken } = useContext(AuthContext)
+    console.log(user)
+    const [loads, setLoads] = useState([]);
 
-/*     const getHandler = () => {
+    const getDeliveredLoads = () => {
+        const authToken = localStorage.getItem('authToken')
         axios
-            .get(`${API_URL}/api/handler/:id`)
-            .then((response) => setHandler(response.data))
+            .get(`${API_URL}/api/previousLoads`, {
+                headers: {
+                    Authorization: `Bearer ${authToken}`
+                }
+            })
+            .then((response) => {
+                console.log(response.data)
+                setLoads(response.data.allLoads)
+            })
             .catch((error) => console.log(error))
     };
-        
+
     useEffect(() => {
-        getHandler();
-    }, []); */
-
-
+        getDeliveredLoads();
+    }, []); 
 
     return (
         <div>
+            <nav className="navbar bg-light mb-25">
+                <div className="container-fluid d-flex flex-row">
+                    <a className="navbar-brand p-10" href="">
+                        <img 
+                        src="https://res.cloudinary.com/sebastien-zachary/image/upload/v1659533259/project3-travelmule/travelmule-brand_csg7sb.png" 
+                        width="35" height="24" class="d-inline-block align-text-top" />
+                        TRAVEL MULE
+                    </a>
+                    <div>
+                    <button type="button" class="btn btn-primary btn-sm">Logout</button>
+                    </div>
+                </div>
+            </nav>
             <div>
                 {user && (
-                    <div>
-                        {user._id}
+                <div className="card text-bg-light border-secondary col-sm-6 w-75 mx-auto">
+                    <div className="card-header">
+                        Handler Profile
                     </div>
+                    <div className="card-body">
+                        <h3 className="card-title">{user.firstName}  {user.lastName}</h3>
+                        <h5>{user.email}</h5>
+                        <h5>{user.password}</h5>
+                        <p className="card-text">Pick up a load from the list below!</p>
+                        <div className="d-grid gap-2 d-md-block">
+                            <Link to={`/handler`}>
+                            <button type="button" className="btn btn-secondary btn-sm w-40 mx-auto">Edit Profile</button>
+                        </Link>
+                        <Link to={`/loads`}>
+                            <button type="button" className="btn btn-secondary btn-sm w-40 mx-auto">Back to available loads</button>
+                        </Link>
+                        </div>
+                    </div>
+                </div>
                 )}
-            <h1>Handle Information</h1>
-            <h2>Personal Info</h2>
-            <h5>First name</h5>
-            <h5>Last name</h5>
-            <h5>Email address</h5>
-            <h5>Password</h5>
-            <button>Edit Profile</button>
             </div>
+            
             <div>
                 <h1>Current Load</h1>
                 
+            </div>           
+            {loads.map((load) => (
+            <div key={load._id} className="card border-primary col-sm-6 w-70 mx-auto" >
+                <div className="card-header text-primary">
+                    <h3>Completed loads</h3>
+                </div>
+                <div className="card-body text-primary">
+                    <h4>{load.startAirport} -> {load.endAirport}</h4>
+                    <p className="card-text">Sender: <strong>{load.senderInfo}</strong></p>
+                    <p className="card-text">Receiver: <strong>{load.receiverInfo}</strong></p>
+                    <p className="card-text">Contents: <strong>{load.contents}</strong></p>
+                    <p className="card-text">Price: <strong>{load.price}</strong></p>
+                    <p className="card-text">Status: <strong>{load.status}</strong></p>                    
+                </div>
             </div>
-            <div>
-                <h1>Comepleted loads</h1>
-                <p>Load Details</p>
-            </div>
+            ))}
         </div>
     )
 }

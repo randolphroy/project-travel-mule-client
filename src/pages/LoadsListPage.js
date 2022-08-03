@@ -44,34 +44,41 @@ function LoadsListPage() {
 
     return (
         <div className="LoadsListPage">
-            <nav className="navbar bg-light">
+            <nav className="navbar bg-light mb-25">
                 <div className="container-fluid d-flex flex-row">
                     <a className="navbar-brand p-10" href="">
                         <img 
                         src="https://res.cloudinary.com/sebastien-zachary/image/upload/v1659533259/project3-travelmule/travelmule-brand_csg7sb.png" 
-                        width="30" height="24" class="d-inline-block align-text-top" />
-                        TRAVELMULE
+                        width="35" height="24" class="d-inline-block align-text-top" />
+                        TRAVEL MULE
                     </a>
                     <div>
-
+                    <button type="button" class="btn btn-primary btn-sm">Logout</button>
                     </div>
                 </div>
             </nav>
-            <h5>Welcome back!</h5>
-            <Link to={`/handler`}>
-            <h2>{user.firstName}</h2>
-            </Link>
-            <h4>Pick up a load!</h4>
+            <div className="card text-bg-light col-sm-6 w-75 mx-auto">
+                <div className="card-header">
+                    Handler Profile
+                </div>
+                <div className="card-body">
+                    <h4 className="card-title">Welcome back, {user.firstName}!</h4>
+                    <p className="card-text">Pick up a load from the list below!</p>
+                    <Link to={`/handler`}>
+                        <button type="button" className="btn btn-primary btn-sm w-40 mx-auto">Go to Profile</button>
+                    </Link>
+                </div>
+            </div>
             {/* <LoadSearch loadSearch = {loadSearch} updateLoadSearch = {updateLoadSearch} /> */}
             {/* <AddLoad refreshLoad={getAllLoads} /> */}
             {loads.map((load) => (
-                <div key={load._id} className="card col-sm-6 mx-auto" >
+                <div key={load._id} className="card col-sm-6 w-70 mx-auto" >
                     <div className="card-header">
                         <h3>{load.startAirport} -> {load.endAirport}</h3>
                     </div>
                     <div className="card-body">
                         <p className="card-text">Contents: <strong>{load.contents}</strong></p>
-                        <p className="card-text">Contents: <strong>{load.contents}</strong></p>
+                        <p className="card-text">Price: <strong>{load.price}</strong></p>
                         <Link to={`/loads/${load._id}`}>
                             <button type="button" className="btn btn-secondary btn-sm w-25 mx-auto">Details</button>
                         </Link>
@@ -84,3 +91,4 @@ function LoadsListPage() {
 }
 
 export default LoadsListPage;
+
