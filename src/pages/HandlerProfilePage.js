@@ -6,7 +6,7 @@ import { AuthContext } from "../context/auth.context";
 
 
 
-const API_URL = "http://localhost:5005";
+const API_URL = process.env.REACT_APP_API_URL;
 
 function HandlerProfilePage() {
 
@@ -44,13 +44,15 @@ function HandlerProfilePage() {
                         TRAVEL MULE
                     </a>
                     <div>
-                    <button type="button" class="btn btn-primary btn-sm">Logout</button>
+                    <Link to={`/login`}>
+                    <button type="button" onClick={() => localStorage.clear()} class="btn btn-primary btn-sm">Logout</button>
+                    </Link>
                     </div>
                 </div>
             </nav>
             <div>
                 {user && (
-                <div className="card text-bg-light border-secondary col-sm-6 w-75 mx-auto">
+                <div className="card text-bg-light border-secondary col-sm-6 w-75 mt-50 mx-auto">
                     <div className="card-header">
                         Handler Profile
                     </div>
@@ -73,16 +75,19 @@ function HandlerProfilePage() {
             </div>
             
             <div>
-                <h1>Current Load</h1>
-                
-            </div>           
+                <h3>Current Load</h3>
+            </div>
+            <hr class="bg-danger border-2 border-top border-secondary" />      
+            <div>
+                <h3>Completed loads</h3>
+            </div>      
             {loads.map((load) => (
             <div key={load._id} className="card border-primary col-sm-6 w-70 mx-auto" >
                 <div className="card-header text-primary">
-                    <h3>Completed loads</h3>
+                    <h4>{load.startAirport} -> {load.endAirport}</h4>
                 </div>
                 <div className="card-body text-primary">
-                    <h4>{load.startAirport} -> {load.endAirport}</h4>
+                    
                     <p className="card-text">Sender: <strong>{load.senderInfo}</strong></p>
                     <p className="card-text">Receiver: <strong>{load.receiverInfo}</strong></p>
                     <p className="card-text">Contents: <strong>{load.contents}</strong></p>

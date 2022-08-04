@@ -7,7 +7,7 @@ import LoadSearch from "../components/LoadSearch";
 import { AuthContext } from "../context/auth.context";
 
 
-const API_URL = "http://localhost:5005";
+const API_URL = process.env.REACT_APP_API_URL;
 
 function LoadsListPage() {
 
@@ -62,7 +62,7 @@ function LoadsListPage() {
                     Handler Profile
                 </div>
                 <div className="card-body">
-                    <h4 className="card-title">Welcome back, {user.firstName}!</h4>
+                    <h4 className="card-title">Welcome back,{user.firstName}! </h4>
                     <p className="card-text">Pick up a load from the list below!</p>
                     <Link to={`/handler`}>
                         <button type="button" className="btn btn-primary btn-sm w-40 mx-auto">Go to Profile</button>

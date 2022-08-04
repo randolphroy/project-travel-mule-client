@@ -18,15 +18,15 @@ function App() {
       />
       <Route
           path="/loads"
-          element={ <LoadsListPage /> } 
+          element={ <LoadsListPage />  } 
         />
       <Route
           path="/loads/:loadId"
-          element={  <LoadDetailPage />  }
+          element={  <LoadDetailPage />   }
         />
       <Route
           path="/handler"
-          element={ <HandlerProfilePage /> }
+          element={ <HandlerProfilePage />  }
         />
       <Route path="/signup" element={ <SignupPage /> } />
       <Route path="/login" element={ <LoginPage /> } />
