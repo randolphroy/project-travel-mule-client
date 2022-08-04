@@ -56,7 +56,9 @@ function LoadDetailPage(){
                         TRAVEL MULE
                     </a>
                     <div>
-                    <button type="button" class="btn btn-primary btn-sm">Logout</button>
+                        <Link to={`/login`}>
+                        <button type="button" onClick={() => localStorage.clear()} class="btn btn-primary btn-sm">Logout</button>
+                        </Link>
                     </div>
                 </div>
             </nav>
